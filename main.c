@@ -2,135 +2,74 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_NAME 50
-
-// Structure for student
+// --- Structure Definition ---
 typedef struct {
-    char name[MAX_NAME];
+    char name[100];
     int rollNumber;
-    float marks;
+    int marks;
 } Student;
 
-// Function Prototypes
-void addStudent(Student **list, int *count);
-void searchStudent(Student *list, int count);
-void saveRecords(Student *list, int count);
-void exitProgram(Student *list);
+// --- Function Prototypes ---
+void addStudent(Student **records, int *count, int *capacity);
+void searchRecord(Student *records, int count);
+void saveToFile(Student *records, int count);
 
-// Main function
 int main() {
-    Student *studentList = NULL; 
-    int studentCount = 0;        
+    char userName[100];
+    int count = 0;
+    int capacity = 5;
+
+    // Initial allocation
+    Student *records = (Student *)malloc(capacity * sizeof(Student));
+    if (!records) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    // Greeting
+    printf("--- Welcome to the Student Record System ---\n");
+    printf("Enter your name: ");
+    fgets(userName, sizeof(userName), stdin);
+    userName[strcspn(userName, "\n")] = 0;
+    printf("Hello, %s!\n\n", userName);
+
+    // Main menu for user's choice using loop and switch-statement
     int choice;
-
-    printf("Welcome to Student Management System!\n");
-
-    // Main Menu Loop
     do {
-        printf("\n Select option from the menu \n");
+        printf("\nSelect from the menu options:\n");
         printf("1. Add Student\n");
         printf("2. Search Student\n");
         printf("3. Save Records\n");
         printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+        getchar();
 
-        switch(choice) {
-            case 1:
-                addStudent(&studentList, &studentCount);
+
+        switch (choice) {
+            case 1: 
+                printf("[INFO] Add Student function called.\n");
+                // addStudent(&records, &count, &capacity);
                 break;
-            case 2:
-                searchStudent(studentList, studentCount);
+            case 2: 
+                printf("[INFO] Search Student function called.\n");
+                // searchRecord(records, count);
                 break;
-            case 3:
-                saveRecords(studentList, studentCount);
+            case 3: 
+                printf("[INFO] Save Records function called.\n");
+                // saveToFile(records, count);
                 break;
-            case 4:
-                exitProgram(studentList);
+            case 4: 
+                printf("Exiting system...\n");
                 break;
-            default:
-                printf("Invalid choice. Please try again.\n");
+            default: 
+                printf("Invalid choice. Try again.\n");
         }
 
-    } while(choice != 4);
+    } while (choice != 4);
 
+    free(records); // cleanup
+    printf("Memory freed. Goodbye!\n");
     return 0;
 }
 
-// Function to add a student
-void addStudent(Student **list, int *count) {
-    (*count)++;
-    *list = realloc(*list, sizeof(Student) * (*count));
-    if(*list == NULL) {
-        printf("Memory allocation failed!\n");
-        exit(1);
-    }
-
-    printf("\nEnter student name: ");
-    scanf(" %[^\n]s", (*list)[*count - 1].name);
-
-    printf("Enter roll number: ");
-    scanf("%d", &(*list)[*count - 1].rollNumber);
-
-    printf("Enter marks: ");
-    scanf("%f", &(*list)[*count - 1].marks);
-
-    if((*list)[*count - 1].marks >= 40)
-        printf("Status: Pass\n");
-    else
-        printf("Status: Fail\n");
-
-    printf("Student added successfully!\n");
-}
-
-// Function to search a student by roll number
-void searchStudent(Student *list, int count) {
-    if(count == 0) {
-        printf("\nNo student records found.\n");
-        return;
-    }
-
-    int roll;
-    printf("\nEnter roll number to search: ");
-    scanf("%d", &roll);
-
-    for(int i = 0; i < count; i++) {
-        if(list[i].rollNumber == roll) {
-            printf("Student Found:\n");
-            printf("Name: %s\n", list[i].name);
-            printf("Roll Number: %d\n", list[i].rollNumber);
-            printf("Marks: %.2f\n", list[i].marks);
-            printf("Status: %s\n", list[i].marks >= 40 ? "Pass" : "Fail");
-            return;
-        }
-    }
-
-    printf("Student with roll number %d not found.\n", roll);
-}
-
-// Function to save records to file
-void saveRecords(Student *list, int count) {
-    if(count == 0) {
-        printf("\nNo student records to save.\n");
-        return;
-    }
-
-    FILE *file = fopen("students.txt", "w");
-    if(file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-
-    for(int i = 0; i < count; i++) {
-        fprintf(file, "%s,%d,%.2f\n", list[i].name, list[i].rollNumber, list[i].marks);
-    }
-
-    fclose(file);
-    printf("Records saved to students.txt successfully.\n");
-}
-
-// Function to exit program
-void exitProgram(Student *list) {
-    free(list);
-    printf("\nAll memory freed. Exiting program. Goodbye!\n");
-}
