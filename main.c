@@ -68,6 +68,8 @@ int main() {
 
     } while (choice != 4);
 
+    // ----------------- Function Implementations ----------------- (other members)
+
     free(records); // cleanup
     printf("Memory freed. Goodbye!\n");
     return 0;
