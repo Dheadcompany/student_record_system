@@ -19,4 +19,10 @@ typedef struct {
 void saveToFile(Student *students, int count);
 void loadFromFile(Student **students, int *count, int *capacity);
 
-#endif // STUDENT_H
+typedef struct {
+char name[100];
+int rollNumber;
+float marks;
+} Student;
+
+#endif //STUDENT_H
