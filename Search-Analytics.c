@@ -45,16 +45,16 @@ return -1; // Not found
 
 // 3.Class Analytics
 //This calculates the average  for the whole group.
-float calculateAverage(Student *records, int count) {
+double calculateAverage(Student *records, int count) {
 if (count == 0) {
-return 0.0f;
+return 0.0;
 }
 
-float sum = 0.0f;
+double sum = 0.0;
 for (int i = 0; i < count; i++) {
 sum += records[i].marks;
 }
 
 //Divide the total by the number of students to get the average.
-return sum / (float)count;
+return sum / (double)count;
 }

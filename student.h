@@ -15,14 +15,24 @@ typedef struct {
     double marks;
 } Student;
 
-// Function prototypes for file operations
+// Function prototypes for file operations (Member 5)
 void saveToFile(Student *students, int count);
 void loadFromFile(Student **students, int *count, int *capacity);
 
-typedef struct {
-char name[100];
-int rollNumber;
-float marks;
-} Student;
+// Function prototypes for search and analytics (Member 4)
+void displayRecords(Student *records, int count);
+int searchRecord(Student *records, int count, int targetRoll);
+double calculateAverage(Student *records, int count);
 
-#endif //STUDENT_H
+// Function prototypes for record management (Member 3)
+void addStudent(Student **records, int *count, int *capacity);
+void modifyRecord(Student *records, int count);
+
+// Function prototypes for sorting and integrity (Member 6)
+void sortByMarksAscending(Student *records, int count);
+void sortByMarksDescending(Student *records, int count);
+void removeStudentRecord(Student *records, int *count);
+int isRollNumberUnique(Student *records, int count, int rollNumber);
+int isValidMarks(double marks);
+
+#endif // STUDENT_H
