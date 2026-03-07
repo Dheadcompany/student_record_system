@@ -17,8 +17,7 @@ int main() {
     int capacity = INITIAL_CAPACITY;
 
     // Greeting (Member 1)
-    printf("--- Welcome to the Student Record System ---
-");
+    printf("--- Welcome to the Student Record System --- ");
     printf("Enter your name: ");
     fgets(userName, sizeof(userName), stdin);
     userName[strcspn(userName, "\n")] = 0;
