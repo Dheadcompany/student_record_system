@@ -19,6 +19,11 @@ void loadFromFile(Student **students, int *count, int *capacity) {
     FILE *file = fopen(FILE_NAME, "r");
     if (file == NULL) {
         printf("No data file found (%s) → starting empty.\n", FILE_NAME);
+        *students = (Student *)malloc(*capacity * sizeof(Student));
+        if (*students == NULL) {
+            perror("Failed to allocate initial memory");
+            exit(1);
+        }
         return;  // No crash - just return with empty array
     }
 
@@ -184,8 +189,13 @@ void loadFromFile(Student **students, int *count, int *capacity) {
         (*records)[*count] = newStudent;
 
         (*count)++;
-
+        
         printf("\n[+] Student added successfully.\n");
+        if (marks >= 40.0) {
+            printf("[i] Result: PASS (Marks: %.2f >= 40)\n", marks);
+        } else {
+            printf("[i] Result: FAIL (Marks: %.2f < 40)\n", marks);
+        }
 
     }
 
